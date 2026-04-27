@@ -2,7 +2,9 @@
 
 Este proyecto corresponde a la **Parte A** del Trabajo Práctico Integrador 4. Consiste en una evolución del backend desarrollado anteriormente, implementando un **Módulo de Catálogo de Productos** robusto con **FastAPI** y **SQLModel**, conectado a **MySQL**. 
 
-[cite_start]Se ha optimizado la arquitectura para soportar auditoría temporal, respuestas estandarizadas y relaciones complejas entre productos, categorías e ingredientes[cite: 11, 13, 34].
+**Link al video:** [Video](https://drive.google.com/file/d/1t7eY1UwGy2gW8AnTZ5VF8t5SfTt64Vli/view?usp=drive_link)
+
+Se ha optimizado la arquitectura para soportar auditoría temporal, respuestas estandarizadas y relaciones complejas entre productos, categorías e ingredientes.
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -14,12 +16,12 @@ Este proyecto corresponde a la **Parte A** del Trabajo Práctico Integrador 4. C
 
 ## ⚙️ Características Principales
 
-* [cite_start]**CRUD Completo con Auditoría:** Gestión de `Categorías`, `Productos` e `Ingredientes` con registro automático de `created_at` y `updated_at`[cite: 32, 33, 118].
+* **CRUD Completo con Auditoría:** Gestión de `Categorías`, `Productos` e `Ingredientes` con registro automático de `created_at` y `updated_at`.
 * **Borrado Lógico (Soft Delete):** Implementación de `deleted_at` para preservar la integridad de los datos y el historial de auditoría.
 * **Relaciones N:M Avanzadas:** * `Producto` ↔ `Categoría` (con atributo `es_principal`).
     * `Producto` ↔ `Ingrediente` (con atributo `es_removible`).
-* [cite_start]**Respuestas Estandarizadas:** Todos los endpoints devuelven un formato consistente con mensajes de éxito y datos encapsulados[cite: 37].
-* [cite_start]**CORS Habilitado:** Configurado para la integración nativa con el frontend en React[cite: 36, 119].
+* **Respuestas Estandarizadas:** Todos los endpoints devuelven un formato consistente con mensajes de éxito y datos encapsulados.
+* **CORS Habilitado:** Configurado para la integración nativa con el frontend en React.
 
 ## 🚀 Requisitos Previos
 
