@@ -12,12 +12,19 @@ router = APIRouter(prefix="/productos", tags=["Productos"])
 def get_producto_uow(session: Session = Depends(get_session)) -> ProductoUnitOfWork:
     return ProductoUnitOfWork(session)
 
-@router.post("/", response_model=RespuestaEstandar[schemas.ProductoRead], status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    response_model=RespuestaEstandar[schemas.ProductoRead],
+    status_code=status.HTTP_201_CREATED,
+    responses={
+        404: {"description": "Una o más categorías no existen"},
+        422: {"description": "categoria_ids es obligatorio y debe tener al menos un elemento"},
+    }
+)
 def alta_producto(producto: schemas.ProductoCreate, uow: ProductoUnitOfWork = Depends(get_producto_uow)):
     nuevo = service.crear(uow, producto)
     return {"message": "Producto creado", "data": nuevo}
 
-# REQUERIMIENTO DEL PARCIAL: Uso de Annotated y Query
 @router.get("/", response_model=RespuestaEstandar[List[schemas.ProductoRead]])
 def listar_productos(
     skip: Annotated[int, Query(ge=0, description="Omitir registros")] = 0,
@@ -35,7 +42,15 @@ def detalle_producto(id: int = Path(..., gt=0), uow: ProductoUnitOfWork = Depend
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Producto no encontrado")
     return {"message": "Producto encontrado", "data": producto}
 
-@router.put("/{id}", response_model=RespuestaEstandar[schemas.ProductoRead], status_code=status.HTTP_200_OK)
+@router.put(
+    "/{id}",
+    response_model=RespuestaEstandar[schemas.ProductoRead],
+    status_code=status.HTTP_200_OK,
+    responses={
+        404: {"description": "Producto o categoría no encontrada"},
+        422: {"description": "categoria_ids no puede ser lista vacía si se envía"},
+    }
+)
 def actualizar_producto(producto: schemas.ProductoUpdate, id: int = Path(..., gt=0), uow: ProductoUnitOfWork = Depends(get_producto_uow)):
     actualizado = service.actualizar(uow, id, producto)
     if not actualizado:
