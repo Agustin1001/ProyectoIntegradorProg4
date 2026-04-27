@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List
 from datetime import datetime
+from app.modules.categoria.schemas import CategoriaRead
 
 class ProductoBase(BaseModel):
     nombre: str = Field(..., max_length=150)
@@ -42,4 +43,6 @@ class ProductoRead(ProductoBase):
     id: int
     created_at: datetime
     updated_at: datetime
-    class Config: from_attributes = True  # noqa: E701
+    categorias: List[CategoriaRead] = []   # ← nuevo
+    class Config:
+        from_attributes = True
